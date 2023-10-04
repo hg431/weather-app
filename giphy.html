@@ -7,7 +7,8 @@
 </head>
 <body>
 
-    <button id="new">Generate new GIF</button>
+    <input type="text" id="search" value="cats">
+    <input type="submit" id="new" value="Generate new GIF">
     <br />
     <br />
     <img src="#" alt="" srcset="">
@@ -15,14 +16,23 @@
     <script>
         const img = document.querySelector('img');
         const button = document.getElementById('new');
+        const search = document.getElementById('search');
+        const errorMessage = document.createTextNode("Error, API hasn't worked");
 
         function newPic() {
-            fetch('https://api.giphy.com/v1/gifs/translate?api_key=3TenCGwtuKFrvq8XFPWH2VzlPcofl2q1&s=cats', {mode: 'cors'})
+            fetch('https://api.giphy.com/v1/gifs/translate?api_key=3TenCGwtuKFrvq8XFPWH2VzlPcofl2q1&s=' + search.value, {mode: 'cors'})
             .then(function(response) {
                 return response.json();
             })
             .then(function(response) {
-                img.src = response.data.images.original.url;
+                if (response.data && response.data.images) {
+                    img.src = response.data.images.original.url;
+                } else {
+                    throw new Error('Empty data array received');
+                }
+            })
+            .catch(function(error) {
+                document.body.insertBefore(errorMessage, document.body.firstChild);
             });
         }
 
