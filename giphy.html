@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giphy from The Odin Project</title>
+</head>
+<body>
+
+    <button id="new">Generate new GIF</button>
+    <br />
+    <br />
+    <img src="#" alt="" srcset="">
+
+    <script>
+        const img = document.querySelector('img');
+        const button = document.getElementById('new');
+
+        function newPic() {
+            fetch('https://api.giphy.com/v1/gifs/translate?api_key=3TenCGwtuKFrvq8XFPWH2VzlPcofl2q1&s=cats', {mode: 'cors'})
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(response) {
+                img.src = response.data.images.original.url;
+            });
+        }
+
+        newPic();
+
+        button.addEventListener('click', function() {
+            newPic();
+        });
+
+    </script>
+</body>
+</html>
