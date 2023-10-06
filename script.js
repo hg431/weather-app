@@ -94,5 +94,11 @@ async function search(location = 'London') {
 
     document.querySelector('#curtain').style = 'visibility:hidden;';
     document.querySelector('#loading').style = 'visibility:hidden;';
+
+    document.querySelector('main').focus();
+    window.scrollTo({
+        top: 0,
+        behaviour: 'smooth'
+    });
 };
 search();
