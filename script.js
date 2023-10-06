@@ -26,7 +26,7 @@ async function search(location = 'London') {
     const key = 'a4986653a3814601b4c145542230110';
     document.querySelector('#curtain').style = 'visibility:visible;';
     document.querySelector('#loading').style = 'visibility:visible;';
-    const query = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${key}&q=${location}&days=3`, {mode: 'cors'});
+    const query = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=${key}&q=${location}&days=3`, {mode: 'cors'});
     const response = await query.json();
     const weatherData = {
         location: response.location.name,
@@ -34,7 +34,7 @@ async function search(location = 'London') {
         lat: response.location.lat,
         lon: response.location.lon,
         currentText: response.current.condition.text,
-        currentIcon: 'http:' + response.current.condition.icon,
+        currentIcon: 'https:' + response.current.condition.icon,
         isDay: response.current.is_day,
         todaySunset: response.forecast.forecastday[0].astro.sunset,
         tomorrowSunrise: response.forecast.forecastday[1].astro.sunrise,
@@ -47,19 +47,19 @@ async function search(location = 'London') {
         forecastDay0: {
                 date: response.forecast.forecastday[0].date,
                 day: null,
-                icon: 'http:' + response.forecast.forecastday[0].day.condition.icon,
+                icon: 'https:' + response.forecast.forecastday[0].day.condition.icon,
                 temp: Math.round(response.forecast.forecastday[0].day.maxtemp_c),
             },
         forecastDay1: {
                 date: response.forecast.forecastday[1].date,
                 day: null,
-                icon: 'http:' + response.forecast.forecastday[1].day.condition.icon,
+                icon: 'https:' + response.forecast.forecastday[1].day.condition.icon,
                 temp: Math.round(response.forecast.forecastday[1].day.maxtemp_c),
             },
         forecastDay2:  {
                 date: response.forecast.forecastday[2].date,
                 day: null,
-                icon: 'http:' + response.forecast.forecastday[2].day.condition.icon,
+                icon: 'https:' + response.forecast.forecastday[2].day.condition.icon,
                 temp: Math.round(response.forecast.forecastday[2].day.maxtemp_c),
             },
         nextSunChange: null,
