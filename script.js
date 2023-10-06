@@ -10,29 +10,15 @@ searchbox.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
         e.preventDefault();
         search(document.getElementById('search').value);
+        searchbox.blur();
     }
 })
 
 document.querySelector('input[type="submit"]').addEventListener('click', function() {
     preventDefault();
     search(document.getElementById('search').value);
+    searchbox.blur();
 })
-
-/*
-
-SUNNY
-
-WINTRY
-
-
-
-RAINY
-
-
-
-
-*/
-
 
 async function search(location = 'London') {
     const key = 'a4986653a3814601b4c145542230110';
@@ -163,7 +149,6 @@ async function search(location = 'London') {
     document.querySelector('#curtain').style = 'visibility:hidden;';
     document.querySelector('#loading').style = 'visibility:hidden;';
 
-    document.querySelector('main').focus();
     window.scrollTo({
         top: 0,
         behaviour: 'smooth'
