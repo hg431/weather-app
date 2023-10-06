@@ -22,10 +22,9 @@
             border-radius: 15px;
             background: rgba(255, 255, 255, 0.40);
             backdrop-filter: blur(5px);
-            padding: 15px;
         }
         h1, h2 {
-            padding: 0 0 15px 5px;
+            padding: 15px;
             margin: 0;
             font-size: 3rem;
             font-weight: normal;
@@ -33,7 +32,7 @@
         }
         h2 {
             font-size: 1.5rem;
-            padding: 15px 0 15px 5px;
+            padding: 15px;
         }
         h1 > span, h2 > span {
             font-size: 0.94rem;
@@ -48,8 +47,9 @@
         #container {
             display: grid;
             margin: 20px 0;
+            padding: 15px;
             grid-template-columns: repeat(3, calc((100% - 20px)/3));
-            grid-template-rows: repeat(3, 120px);
+            grid-template-rows: repeat(2, 120px);
             grid-gap: 10px;
         }
         .tile {
@@ -59,18 +59,65 @@
             box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.19);
             padding: 10px;
             text-align: center;
-        }
-        .tile .label {
-            font-size: 0.75rem;
-            line-height: 95%;
-            text-transform: uppercase;
-            display: block;
-        }
-        .tile .value {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            flex-wrap: wrap;
             font-size: 2.25rem;
         }
-        .title .unit {
-            font-size: 2rem;
+        .label {
+            font-size: 0.75rem;
+            line-height: 95%;
+            display: block;
+            width: 100%;
+            text-transform: uppercase;
+        }
+        .unit {
+            font-size: 1.6rem;
+        }
+        #forecast {
+            display: grid;
+            grid-template-columns: repeat(3, calc(100% / 3));
+            grid-template-rows: repeat(1, 150px);
+            background: rgba(217, 217, 217, 0.50);
+            border-radius: 0rem 0rem 15px 15px;
+            border-top: 1px solid white;
+        }
+        #forecast > *:not(:last-child) {
+            border-right: 1px solid white;
+        }
+        #d0, #d1, #d2 {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-content: center;
+            flex-wrap: wrap;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+        input {
+            border: 0;
+            padding: 0;
+            margin: 0;
+            padding-block: 0;
+            padding-inline: 0;
+        }
+        footer {
+            display: flex;
+            margin-top: 15px;
+        }
+        footer > input[type="text"] {
+            border-radius: 15px 0 0 15px;
+            font-size: 1.1rem;
+            height: 3em;
+            padding-left: 1.2em;
+            flex-grow: 1;
+        }
+        footer > input[type="submit"] {
+            border-radius: 0 15px 15px 0;
+            background-color: green;
         }
     </style>
 </head>
@@ -87,9 +134,56 @@
         <div id="container">
             <div class="tile">
                 <span class="label">Temp</span>
-                <span class="value">17</span><span class="unit">&deg;C</span>
+                17
+                <span class="unit">&deg;C</span>
+            </div>
+            <div class="tile">
+                <span class="label">Feels Like</span>
+                19
+                <span class="unit">&deg;C</span>
+            </div>
+            <div class="tile">
+                <span class="label">UV</span>
+                0
+                <span class="unit"></span>
+            </div>
+            <div class="tile">
+                <span class="label">Visibility</span>
+                10
+                <span class="unit">km</span>
+            </div>
+            <div class="tile">
+                <span class="label">Wind</span>
+                3
+                <span class="unit">mph</span>
+            </div>
+            <div class="tile">
+                <span class="label">Direction</span>
+                WSW
+                <span class="unit"></span>
+            </div>
+        </div>
+        <div id="forecast">
+            <div id="d0">
+                WED
+                <img src="http://cdn.weatherapi.com/weather/64x64/day/116.png" alt="" srcset="">
+                17&deg;C
+            </div>
+            <div id="d1">
+                WED
+                <img src="http://cdn.weatherapi.com/weather/64x64/day/116.png" alt="" srcset="">
+                17&deg;C
+            </div>
+            <div id="d2">
+                WED
+                <img src="http://cdn.weatherapi.com/weather/64x64/day/116.png" alt="" srcset="">
+                17&deg;C
             </div>
         </div>
     </main>
+    <footer>
+        <input type="text" name="search" id="search" value="Search city...">
+        <input type="submit" value="Submit">
+    </footer>
 </body>
 </html>
