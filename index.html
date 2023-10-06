@@ -64,10 +64,10 @@
         }
         #container {
             display: grid;
-            margin: 20px 0;
+            margin: 0;
             padding: 15px;
-            grid-template-columns: repeat(3, calc((100% - 20px)/3));
-            grid-template-rows: repeat(2, 120px);
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 100px);
             grid-gap: 10px;
         }
         .tile {
@@ -96,8 +96,8 @@
         }
         #forecast {
             display: grid;
-            grid-template-columns: repeat(3, calc(100% / 3));
-            grid-template-rows: repeat(1, 150px);
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(1, 130px);
             background: rgba(217, 217, 217, 0.50);
             border-radius: 0rem 0rem 15px 15px;
             border-top: 1px solid white;
@@ -112,7 +112,7 @@
             justify-content: center;
             align-content: center;
             flex-wrap: wrap;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: bold;
         }
         input {
@@ -135,7 +135,15 @@
         }
         footer > input[type="submit"] {
             border-radius: 0 15px 15px 0;
-            background-color: green;
+            background-image: url('search.svg');
+            background-position: center;
+            background-repeat: no-repeat;
+            width: 60px;
+            filter: invert(100%) sepia(8%) saturate(0%) hue-rotate(29deg) brightness(106%) contrast(107%);
+        }
+        #forecast .temp {
+            font-size: 1rem;
+            font-weight: normal;
         }
     </style>
 </head>
@@ -177,7 +185,7 @@
             </div>
             <div class="tile">
                 <span class="label">Direction</span>
-                WSW
+                <img src="arrow.svg" alt="" style="height:2.25rem;">
                 <span class="unit"></span>
             </div>
         </div>
@@ -185,23 +193,23 @@
             <div id="d0">
                 WED
                 <img src="http://cdn.weatherapi.com/weather/64x64/day/116.png" alt="" srcset="">
-                17&deg;C
+                <span class="temp">17&deg;C</span>
             </div>
             <div id="d1">
                 WED
                 <img src="http://cdn.weatherapi.com/weather/64x64/day/116.png" alt="" srcset="">
-                17&deg;C
+                <span class="temp">17&deg;C</span>
             </div>
             <div id="d2">
                 WED
                 <img src="http://cdn.weatherapi.com/weather/64x64/day/116.png" alt="" srcset="">
-                17&deg;C
+                <span class="temp">17&deg;C</span>
             </div>
         </div>
     </main>
     <footer>
-        <input type="text" name="search" id="search" value="Search city...">
-        <input type="submit" value="Submit">
+        <input type="text" name="search" id="search" value="Search city..." onfocus="this.value=''">
+        <input type="submit" value="">
     </footer>
 </body>
 </html>
