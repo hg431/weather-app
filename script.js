@@ -1,7 +1,3 @@
-// http://api.weatherapi.com/v1/forecast.json?key=a4986653a3814601b4c145542230110&q=London&days=3&aqi=no&alerts=no
-
-
-
 const searchbox = document.querySelector('input#search');
 
 searchbox.addEventListener('focus', function() {
@@ -22,6 +18,22 @@ document.querySelector('input[type="submit"]').addEventListener('click', functio
     search(document.getElementById('search').value);
 })
 
+/*
+
+SUNNY
+
+WINTRY
+
+
+
+RAINY
+
+
+
+
+*/
+
+
 async function search(location = 'London') {
     const key = 'a4986653a3814601b4c145542230110';
     document.querySelector('#curtain').style = 'visibility:visible;';
@@ -34,12 +46,13 @@ async function search(location = 'London') {
         lat: response.location.lat,
         lon: response.location.lon,
         currentText: response.current.condition.text,
+        currentBackground: null,
         currentIcon: 'https:' + response.current.condition.icon,
         isDay: response.current.is_day,
         todaySunset: response.forecast.forecastday[0].astro.sunset,
         tomorrowSunrise: response.forecast.forecastday[1].astro.sunrise,
-        currentTemp: response.current.temp_c,
-        currentFeel: response.current.feelslike_c,
+        currentTemp: Math.round(response.current.temp_c),
+        currentFeel: Math.round(response.current.feelslike_c),
         currentUV: response.current.uv,
         currentViz: response.current.vis_km,
         currentWind: Math.round(response.current.wind_mph),
@@ -77,6 +90,58 @@ async function search(location = 'London') {
     weatherData.forecastDay1.day = dateToDayOfWeek(weatherData.forecastDay1.date);
     weatherData.forecastDay2.day = dateToDayOfWeek(weatherData.forecastDay2.date);
 
+    if(weatherData.currentText === 'Partly cloudy' || 'Cloudy') {
+        weatherData.currentBackground = 'cloud';
+    } else if (weatherData.currentText === 'Overcast') {
+        weatherData.currentBackground = 'overcast';
+    } else if (weatherData.currentText === 'Fog' || 'Freezing fog' || 'Mist') {
+        weatherData.currentBackground = 'fog';
+    } else if (weatherData.currentText === 'Sunny') {
+        weatherData.currentBackground = 'sunny';
+    } else if (weatherData.currentText === 'Patchy light snow' || 'Light snow' || 'Patchy moderate snow'
+    || 'Moderate snow'
+    || 'Patchy heavy snow'
+    || 'Heavy snow'
+    || 'Ice pellets'
+    || 'Light sleet'
+    || 'Moderate or heavy sleet'
+    || 'Patchy light snow with thunder'
+    || 'Moderate or heavy snow with thunder'
+    || 'Light snow showers'
+    || 'Moderate or heavy snow showers'
+    || 'Light showers of ice pellets'
+    || 'Blowing snow'
+    || 'Blizzard'
+    || 'Patchy snow possible'
+    || 'Patchy sleet possible') {
+        weatherData.currentBackground = 'winter';
+    } else if (weatherData.currentText === 'Patchy rain possible'
+    || 'Patchy freezing drizzle possible'
+    || 'Thundery outbreaks possible'
+    || 'Heavy rain at times'
+    || 'Heavy rain'
+    || 'Light freezing rain'
+    || 'Moderate or heavy freezing rain'
+    || 'Light rain shower'
+    || 'Moderate or heavy rain shower'
+    || 'Torrential rain shower'
+    || 'Light sleet showers'
+    || 'Moderate or heavy sleet showers'
+    || 'Moderate or heavy showers of ice pellets'
+    || 'Patchy light rain with thunder'
+    |  'Moderate or heavy rain with thunder'
+    || 'Patchy light drizzle'
+    || 'Light drizzle'
+    || 'Freezing drizzle'
+    || 'Heavy freezing drizzle'
+    || 'Patchy light rain'
+    || 'Light rain'
+    || 'Moderate rain at times'
+    || 'Moderate rain') {
+        weatherData.currentBackground = 'rain';
+    }
+
+
     document.querySelector('h1').innerHTML = `${weatherData.location} <span>${weatherData.region} | ${weatherData.lat} ${weatherData.lon}</span>`;
     document.querySelector('main div.row').innerHTML = `<h2>${weatherData.currentText}</h2><span>${weatherData.nextSunChange}</span><div><img src="${weatherData.currentIcon}"></div>`
     document.querySelector('span#temp').innerHTML = weatherData.currentTemp;
@@ -88,6 +153,9 @@ async function search(location = 'London') {
     document.querySelector('div#d0').innerHTML = `${weatherData.forecastDay0.day} <img src="${weatherData.forecastDay0.icon}"><span class="temp">${weatherData.forecastDay0.temp}&deg;C</span>`
     document.querySelector('div#d1').innerHTML = `${weatherData.forecastDay1.day} <img src="${weatherData.forecastDay1.icon}"><span class="temp">${weatherData.forecastDay1.temp}&deg;C</span>`
     document.querySelector('div#d2').innerHTML = `${weatherData.forecastDay2.day} <img src="${weatherData.forecastDay2.icon}"><span class="temp">${weatherData.forecastDay2.temp}&deg;C</span>`
+
+    document.querySelector('body').style.backgroundImage = `url('${weatherData.currentBackground}.jpg')`;
+
 
     console.log(response);
     console.table(weatherData);
