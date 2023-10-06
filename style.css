@@ -2,9 +2,43 @@
 :root {
     --grey: #656565;
 }
+#curtain {
+    background-color: rgba(0, 0, 0, 0.75);
+    width:100vw;
+    height:100vh;
+    position:absolute;
+    top:0;
+    z-index: 8;
+    visibility: hidden;
+}
+#loading {
+    width:4rem;
+    height:4rem;
+    border:10px solid white;
+    border-top: 11px solid red;
+    border-radius: 100%;
+    margin:auto;
+    visibility: hidden;
+    animation: spin 1s infinite linear;
+    position:absolute;
+    top: calc(50vh - 2rem - 5px);
+    left: calc(50vw - 2rem - 5px);
+    z-index: 9;
+}
+#loading.display {
+    visibility: visible;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
 body {
     font-family: 'Roboto', sans-serif;
-    margin: 15px;
+    margin: 0;
     padding: 0;
     background-image: url('sunny.jpg');
     background-repeat: no-repeat;
@@ -13,9 +47,13 @@ body {
     min-height: calc(100vh - 30px);
 }
 main {
+    margin:15px;
     border-radius: 15px;
     background: rgba(255, 255, 255, 0.40);
     backdrop-filter: blur(5px);
+}
+footer {
+    margin:15px;
 }
 h1 {
     padding: 10px 15px 15px 15px;

@@ -1,17 +1,31 @@
 // http://api.weatherapi.com/v1/forecast.json?key=a4986653a3814601b4c145542230110&q=London&days=3&aqi=no&alerts=no
 
-document.querySelector('input#search').addEventListener('keypress', function(e) {
+
+
+const searchbox = document.querySelector('input#search');
+
+searchbox.addEventListener('focus', function() {
+    if (searchbox.value === 'Search city...') {
+        searchbox.value = '';
+    }
+})
+
+searchbox.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
+        e.preventDefault();
         search(document.getElementById('search').value);
     }
 })
 
 document.querySelector('input[type="submit"]').addEventListener('click', function() {
+    preventDefault();
     search(document.getElementById('search').value);
 })
 
 async function search(location = 'London') {
     const key = 'a4986653a3814601b4c145542230110';
+    document.querySelector('#curtain').style = 'visibility:visible;';
+    document.querySelector('#loading').style = 'visibility:visible;';
     const query = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=${key}&q=${location}&days=3`, {mode: 'cors'});
     const response = await query.json();
     const weatherData = {
@@ -74,7 +88,11 @@ async function search(location = 'London') {
     document.querySelector('div#d0').innerHTML = `${weatherData.forecastDay0.day} <img src="${weatherData.forecastDay0.icon}"><span class="temp">${weatherData.forecastDay0.temp}&deg;C</span>`
     document.querySelector('div#d1').innerHTML = `${weatherData.forecastDay1.day} <img src="${weatherData.forecastDay1.icon}"><span class="temp">${weatherData.forecastDay1.temp}&deg;C</span>`
     document.querySelector('div#d2').innerHTML = `${weatherData.forecastDay2.day} <img src="${weatherData.forecastDay2.icon}"><span class="temp">${weatherData.forecastDay2.temp}&deg;C</span>`
+
     console.log(response);
     console.table(weatherData);
+
+    document.querySelector('#curtain').style = 'visibility:hidden;';
+    document.querySelector('#loading').style = 'visibility:hidden;';
 };
 search();
